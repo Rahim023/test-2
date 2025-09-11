@@ -1,0 +1,89 @@
+/* Container */
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 25px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #3e2723; /* dark brown */
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  color: #fff;
+}
+
+/* Headings */
+h1, h2 {
+  text-align: center;
+  color: #ffcc80; /* light brown/golden */
+  margin-bottom: 20px;
+}
+
+/* Form */
+.enquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.enquiry-form input,
+.enquiry-form textarea {
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #6d4c41; /* brown border */
+  border-radius: 10px;
+  background-color: #5d4037; /* slightly lighter brown */
+  color: #fff;
+  transition: border 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.enquiry-form input::placeholder,
+.enquiry-form textarea::placeholder {
+  color: #d7ccc8; /* light placeholder */
+}
+
+.enquiry-form input:focus,
+.enquiry-form textarea:focus {
+  outline: none;
+  border-color: #ffb74d; /* golden focus */
+  box-shadow: 0 0 10px rgba(255, 183, 77, 0.6);
+  background-color: #6d4c41;
+}
+
+.enquiry-form button {
+  padding: 12px;
+  background-color: #8d6e63; /* medium brown */
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.enquiry-form button:hover {
+  background-color: #d7ccc8; /* light brown on hover */
+  color: #3e2723;
+  transform: scale(1.05);
+}
+
+/* Enquiry list */
+.enquiry-list {
+  list-style: none;
+  padding: 0;
+}
+
+.enquiry-item {
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  background-color: #5d4037; /* lighter dark brown */
+  border-left: 5px solid #ffb74d; /* golden accent */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.enquiry-item:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  background-color: #6d4c41; /* slightly lighter brown */
+}
