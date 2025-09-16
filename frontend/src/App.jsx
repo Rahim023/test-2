@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./App.css"; // Make sure this is imported
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"; 
+import "./App.css";
 
 function App() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
@@ -8,7 +9,9 @@ function App() {
   useEffect(() => {
     fetch("http://localhost:5000/api/enquiry")
       .then((res) => res.json())
-      .then((data) => setEnquiries(data));
+      .then((data) =>
+        setEnquiries(data.map((enq) => ({ ...enq, likes: 0 })))
+      );
   }, []);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -24,8 +27,26 @@ function App() {
     if (data.success) {
       alert("Enquiry submitted!");
       setForm({ name: "", email: "", phone: "", message: "" });
-      setEnquiries([data.enquiry, ...enquiries]);
+      setEnquiries([{ ...data.enquiry, likes: 0 }, ...enquiries]);
     }
+  };
+
+  // Infinite Like (always +1)
+  const addLike = (id) => {
+    setEnquiries((prev) =>
+      prev.map((enq) =>
+        enq._id === id ? { ...enq, likes: enq.likes + 1 } : enq
+      )
+    );
+  };
+
+  // Infinite Dislike (always -1)
+  const addDislike = (id) => {
+    setEnquiries((prev) =>
+      prev.map((enq) =>
+        enq._id === id ? { ...enq, likes: enq.likes - 1 } : enq
+      )
+    );
   };
 
   return (
@@ -41,11 +62,52 @@ function App() {
       </form>
 
       <h2>All Enquiries</h2>
-      <ul className="enquiry-list">
+      <ul className="enquiry-list" style={{ listStyle: "none", padding: 0 }}>
         {enquiries.map((enq) => (
-          <li key={enq._id} className="enquiry-item">
-            <strong>{enq.name}</strong> ({enq.email})<br />
-            <span>{enq.message}</span>
+          <li 
+            key={enq._id} 
+            className="enquiry-item"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              padding: "12px",
+              marginBottom: "10px",
+              
+              boxShadow: "0 2px 4px rgba(0,0,0,0.05)"
+            }}
+          >
+            {/* Left side: Enquiry details */}
+            <div style={{ flex: 1 }}>
+              <strong>{enq.name}</strong> <span style={{ color: "#130202ff" }}>({enq.email})</span>
+              <p style={{ margin: "5px 0" }}>{enq.message}</p>
+            </div>
+
+            {/* Right side: Like/Dislike */}
+            <div 
+              className="like-section" 
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: "60px" }}
+            >
+              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                <AiFillHeart
+                  size={24}
+                  color="red"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => addLike(enq._id)}
+                />
+                <AiOutlineHeart
+                  size={22}
+                  color="gray"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => addDislike(enq._id)}
+                />
+              </div>
+              <div className="like-count" style={{ marginTop: "4px", fontWeight: "bold" }}>
+                {enq.likes}
+              </div>
+            </div>
           </li>
         ))}
       </ul>
