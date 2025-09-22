@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/auth/login", { email, password });
+      const res = await API.post("/auth/register", { name, email, password });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      setError(err.response?.data?.message || "Registration failed");
     }
   };
 
@@ -34,7 +35,6 @@ export default function Login() {
           borderRadius: "16px",
         }}
       >
-        {/* Gradient header strip */}
         <div
           style={{
             height: "6px",
@@ -44,9 +44,16 @@ export default function Login() {
           }}
         ></div>
 
-        <h3 className="fw-bold mb-3 text-center text-white">Login</h3>
+        <h3 className="fw-bold mb-3 text-center text-white">Register</h3>
         {error && <div className="alert alert-danger">{error}</div>}
-        <form onSubmit={handleLogin} className="d-flex flex-column gap-3">
+        <form onSubmit={handleRegister} className="d-flex flex-column gap-3">
+          <input
+            type="text"
+            className="form-control bg-dark text-light border-0"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <input
             type="email"
             className="form-control bg-dark text-light border-0"
@@ -68,13 +75,13 @@ export default function Login() {
               border: "none",
             }}
           >
-            Login
+            Register
           </button>
         </form>
         <p className="mt-3 text-center" style={{ color: "#bbb" }}>
-          Don't have an account?{" "}
-          <Link to="/register" style={{ color: "#ff4da6" }}>
-            Register
+          Already have an account?{" "}
+          <Link to="/login" style={{ color: "#ff4da6" }}>
+            Login
           </Link>
         </p>
       </div>

@@ -1,4 +1,16 @@
-/* Basic clean styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-100;
+}
+
+.c {
+  color: white;
+  opacity: 1;
+}
+
 body { font-family: Arial, Helvetica, sans-serif; background: #000d21; margin: 0; padding: 0; }
 .auth-page { display:flex; align-items:center; justify-content:center; min-height:100vh; }
 .card { width: 360px; background: white; padding: 24px; border-radius: 12px; box-shadow: 0 6px 18px rgba(217, 183, 142, 0.08); }
